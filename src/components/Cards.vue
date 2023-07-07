@@ -101,7 +101,7 @@ onMounted(async () => {
         <v-divider></v-divider>
 
         <v-card-text>
-          <v-autocomplete id="input-pokemon" v-if="Autocomplete" label="Autocomplete" :items="Autocomplete.value" v-model="AutocompleteValue"></v-autocomplete>
+          <v-autocomplete id="input-pokemon" v-if="Autocomplete" :label="$t('Pokemon name')" :items="Autocomplete.value" v-model="AutocompleteValue"></v-autocomplete>
           <v-btn @click="verification" >{{ $t("Send") }}</v-btn>
         </v-card-text>
       </div>
