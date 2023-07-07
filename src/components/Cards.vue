@@ -6,10 +6,10 @@ import { onMounted, watch  } from 'vue';
 const props = defineProps<{ pokemon: Pokemon }>()
 // get the pokemon given in props
 const pokemon = ref(props.pokemon).value;
-console.log(pokemon);
 var nbTry = ref(0);
 var Autocomplete = reactive(new Array<string>() );
 var AutocompleteValue = "";
+var pokemonName = pokemon.translations.get(navigator.language) != undefined ? pokemon.translations.get(navigator.language) : pokemon.name;
 function verification() {
   let userAnswer = AutocompleteValue.toLowerCase();
   let translationsResult = false;
@@ -22,7 +22,7 @@ function verification() {
   })
   // if user answer is === to pokemon name or is included in pokemon names array
   if(userAnswer === pokemon.name.toLowerCase() || translationsResult) {
-    alert("Good answer !")
+    alert("Good answer ! You found the pokemon "+ pokemonName +"in " + (nbTry.value+1) + " try !")
   }
   else {
     nbTry.value++;
@@ -31,8 +31,8 @@ function verification() {
         divBlur.style.filter="contrast(1) brightness(1)"
         break;
         case 6:
-          alert("You lost ! The pokemon was " + pokemon.name + ".")
-          break;
+          // get the name of the pokemon in the current language
+          alert("You lost ! The pokemon was " + pokemonName);
     }
   }
 }
@@ -45,8 +45,9 @@ async function importLocalizedFile(): Promise<any> {
     return locale;
   } catch (error) {
     console.error(`Failed to import localized file for language: ${language}`, error);
-    // Gérer l'erreur de chargement du fichier
-    return null;
+    let enFilePath = `../locales/pokemon/en.json`;
+    const { default: locale } = await import(enFilePath);
+    return locale;
   }
 }
 
