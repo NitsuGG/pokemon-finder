@@ -6,7 +6,7 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { createI18n } from 'vue-i18n' 
+import { createI18n } from 'vue-i18n'
 import frMessages from './locales/fr.json'
 import enMessages from './locales/en.json'
 import "@mdi/font/css/materialdesignicons.css"
@@ -21,6 +21,7 @@ const i18n = createI18n({
   legacy: false,
   locale: navigator.language,
   fallbackLocale: 'en',
+  globalInjection: true,
   messages
 })
 const vuetify = createVuetify({

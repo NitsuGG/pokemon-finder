@@ -2,12 +2,15 @@
 import { ref, reactive } from 'vue';
 import Pokemon from '../models/Pokemon';
 import { onMounted  } from 'vue';
+import { useI18n } from 'vue-i18n'
 
+// translation init 
+const { t } = useI18n()
 const props = defineProps<{ pokemon: Pokemon }>()
 // get the pokemon given in props
 const pokemon = ref(props.pokemon).value;
 var nbTry = ref(0);
-var Autocomplete = reactive(new Array<string>() );
+var Autocomplete:any = reactive(new Array<string>() );
 var AutocompleteValue = "";
 var pokemonName = pokemon.translations.get(navigator.language) != undefined ? pokemon.translations.get(navigator.language) : pokemon.name;
 function verification() {
@@ -83,7 +86,7 @@ onMounted(async () => {
     <v-divider></v-divider>
 
     <v-card-title>
-      {{ $t("Who's that pokemon ?") }}
+      {{ t("messages.whos-pokemon") }}
     </v-card-title>
 
     <v-chip-group id="tips">
@@ -95,10 +98,10 @@ onMounted(async () => {
         {{ pokemon.generation.translations.has($i18n.locale)? pokemon.generation.translations.get($i18n.locale) : pokemon.generation.name }}
       </v-chip>
       <v-chip v-if="nbTry >= 2 && pokemon.legendary" class="ma-1" color="green" variant="outlined">
-        {{ $t("Legendary") }}
+        {{ t("messages.Legendary") }}
       </v-chip>
       <v-chip v-if="nbTry >= 2 && pokemon.mythical" class="ma-1" color="green" variant="outlined">
-        {{ $t("Mythical") }}
+        {{ t("messages.Mythical") }}
       </v-chip>
       <v-chip v-if="nbTry >= 3" class="ma-1" color="green" variant="outlined">
         {{ pokemon.color.translations.has($i18n.locale)? pokemon.color.translations.get($i18n.locale) : pokemon.color.name }}
@@ -112,8 +115,8 @@ onMounted(async () => {
         <v-divider></v-divider>
 
         <v-card-text>
-          <v-autocomplete id="input-pokemon" v-if="Autocomplete" :label="$t('Pokemon name')" :items="Autocomplete.value" v-model="AutocompleteValue"></v-autocomplete>
-          <v-btn @click="verification" >{{ $t("Send") }}</v-btn>
+          <v-autocomplete id="input-pokemon" v-if="Autocomplete" :label="t('messages.Pokemon name')" :items="Autocomplete.value" v-model="AutocompleteValue"></v-autocomplete>
+          <v-btn @click="verification" >{{ t("messages.Send") }}</v-btn>
           <v-btn icon class="ml-2" onclick="window.location.reload()">
             <v-icon>mdi-reload</v-icon>
           </v-btn>

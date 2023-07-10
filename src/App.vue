@@ -6,6 +6,10 @@ import Generation from './models/Generation';
 import Color from './models/Color';
 import Cards from './components/Cards.vue';
 import { onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+// translation init 
+const { t } = useI18n()
 
 // get a random pokemon
 const getRandomPokemon = async () => {
@@ -66,7 +70,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <h1 class="title"> {{ $t("Who's that pokemon ?") }}</h1>
+    <h1 class="title"> {{ t("messages.whos-pokemon") }}</h1>
     <Cards v-if="myPokemon" :pokemon="myPokemon" />
   </div>
 </template>
