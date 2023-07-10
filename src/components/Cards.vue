@@ -50,7 +50,14 @@ function verification() {
     }, 1000);
   }
 }
-async function importLocalizedFile(): Promise<any> {
+
+onMounted(async () => {
+  Autocomplete.value = await importLocalizedFile().then((locale) => {
+    return locale;
+  })
+})
+
+async function importLocalizedFile(): Promise<JSON> {
   const language = navigator.language;
   const filePath = `../locales/pokemon/${language}.json`;
 
@@ -64,13 +71,6 @@ async function importLocalizedFile(): Promise<any> {
     return locale;
   }
 }
-
-onMounted(async () => {
-  Autocomplete.value = await importLocalizedFile().then((locale) => {
-    return locale;
-  })
-})
-
 </script>
 
 <template>
