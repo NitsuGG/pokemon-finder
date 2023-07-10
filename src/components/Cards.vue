@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import Pokemon from '../models/Pokemon';
-import { onMounted, watch  } from 'vue';
+import { onMounted  } from 'vue';
 
 const props = defineProps<{ pokemon: Pokemon }>()
 // get the pokemon given in props
@@ -22,7 +22,11 @@ function verification() {
   })
   // if user answer is === to pokemon name or is included in pokemon names array
   if(userAnswer === pokemon.name.toLowerCase() || translationsResult) {
-    alert("Good answer ! You found the pokemon "+ pokemonName +"in " + (nbTry.value+1) + " try !")
+    let etat = confirm("Good answer ! You found the pokemon "+ pokemonName +"in " + (nbTry.value+1) + " try !")
+    if(etat) {
+      window.location.reload();
+    }
+
   }
   else {
     nbTry.value++;
@@ -32,8 +36,15 @@ function verification() {
         break;
         case 6:
           // get the name of the pokemon in the current language
-          alert("You lost ! The pokemon was " + pokemonName);
+          var etat = confirm("You lost ! The pokemon was " + pokemonName + " ! Do you want to try again ?");
+          if(etat) {
+            window.location.reload();
+          }
     }
+    document.getElementById('cards')?.classList.add('wrong-answer');
+    setTimeout(() => {
+      document.getElementById('cards')?.classList.remove('wrong-answer');
+    }, 1000);
   }
 }
 async function importLocalizedFile(): Promise<any> {
@@ -60,7 +71,7 @@ onMounted(async () => {
 </script>
 
 <template>
-      <v-card
+      <v-card id="cards"
     class="mx-auto"
     max-width="344"
   >
@@ -103,6 +114,9 @@ onMounted(async () => {
         <v-card-text>
           <v-autocomplete id="input-pokemon" v-if="Autocomplete" :label="$t('Pokemon name')" :items="Autocomplete.value" v-model="AutocompleteValue"></v-autocomplete>
           <v-btn @click="verification" >{{ $t("Send") }}</v-btn>
+          <v-btn icon class="ml-2" onclick="window.location.reload()">
+            <v-icon>mdi-reload</v-icon>
+          </v-btn>
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -116,4 +130,27 @@ onMounted(async () => {
   transition: filter 0.5s ease-in-out;
   pointer-events: none;
 }
+
+.wrong-answer{
+  /* make the border of the card red, and shake the div */
+  border: 1px solid red;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+
 </style>

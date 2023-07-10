@@ -9,6 +9,8 @@ import * as directives from 'vuetify/directives'
 import { createI18n } from 'vue-i18n' 
 import frMessages from './locales/fr.json'
 import enMessages from './locales/en.json'
+import "@mdi/font/css/materialdesignicons.css"
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 const messages = {
   fr: frMessages,
@@ -24,6 +26,14 @@ const i18n = createI18n({
 const vuetify = createVuetify({
   components,
   directives,
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
+    },
+  },
 })
+
 
 createApp(App).use(vuetify).use(i18n).mount('#app')
