@@ -59,14 +59,14 @@ onMounted(async () => {
 
 async function importLocalizedFile(): Promise<JSON> {
   const language = navigator.language.split('-')[0];
-  const filePath = `../locales/pokemon/${language}.json`;
+  const filePath = `../pokemon/${language}.json`;
 
   try {
     const { default: locale } = await import(filePath);
     return locale;
   } catch (error) {
     console.error(`Failed to import localized file for language: ${language}`, error);
-    let enFilePath = `../locales/pokemon/en.json`;
+    let enFilePath = `../pokemon/en.json`;
     const { default: locale } = await import(enFilePath);
     return locale;
   }
