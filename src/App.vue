@@ -53,7 +53,7 @@ const getRandomPokemon = async () => {
   });
 
   // get Pokemon img
-  var pokemonImg = pokemon.data.sprites.other.home.front_default != null ? pokemon.data.sprites.other.home.front_default : pokemon.data.sprites.front_default;
+  var pokemonImg = pokemon.data.sprites.other.home.front_default != null ? pokemon.data.sprites.other.home.front_default : pokemon.data.sprites.other["official-artwork"].front_default != null ? pokemon.data.sprites.other["official-artwork"].front_default : pokemon.data.sprites.front_default;
   var pokemonObj = new Pokemon(pokemon.data.id, pokemon.data.name, pokemonTypes, pokemonColors, pokemonSpecies.data.is_legendary, pokemonSpecies.data.is_mythical, pokemonGeneration, pokemonImg, translation);
 
   return pokemonObj;
